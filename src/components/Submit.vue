@@ -27,9 +27,9 @@
 const AV = require("leancloud-storage");
 const { Query, User } = AV;
 AV.init({
-  appId: "jbej1lm8yk50Pim43tiN181l-9Nh9j0Va",
-  appKey: "gdQkCmbsoODB5pmCm7gVR9UW",
-  serverURL: "https://jbej1lm8.lc-cn-e1-shared.com",
+  appId: "ZzP4aKPXH1H7lYV6fcqsdmkA-gzGzoHsz",
+  appKey: "WuUgNOxJKoQD6XOIu2F2yDKr",
+  serverURL: "https://zzp4akpx.lc-cn-n1-shared.com",
 });
 AV.debug.disable(); // 停用
 
