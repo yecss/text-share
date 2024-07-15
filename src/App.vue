@@ -3,6 +3,9 @@
   <div class="wrapper container">
     <Display></Display>
     <Submit></Submit>
+    <footer>
+    <p>Developed by 海边的浪. <a href="https://github.com/yecss" target="_blank">GitHub</a>.</p>
+  </footer>
   </div>
 </template>
 

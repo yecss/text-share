@@ -13,6 +13,7 @@
           ></textarea>
         </div>
         <button
+          @keypress="enter"
           @click.prevent="sendData"
           class="btn btn-lg btn-primary btn-block"
         >
@@ -44,6 +45,7 @@ export default {
         const TestObject = AV.Object.extend("messageBoard");
         const testObject = new TestObject();
         testObject.set("words", inpData.value);
+        console.log(inpData.value);
         testObject.save().then((testObject) => {});
         Bus.emit("updataDisplay", inpData.value);
         inpData.value = "";
@@ -53,6 +55,7 @@ export default {
         alert('请输入数据!')
       }
     }
+    
     return {
       sendData,
       inpData,

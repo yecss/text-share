@@ -1,17 +1,21 @@
 <template>
-  <p class="mt-4 ">👍前言：我们经常会遇到这样的情况：从手机上传送一段文本到电脑上时，我们的操作往往是，复制文本，打开手机微信，粘贴发送到传输助手，接着打开电脑微信，接收文本。而现在，我们不需要打开微信。只需要打开这个网站！</p>
+  <p class="mt-4 ">👍前言：我们经常会遇到这样的情况：想要从手机上传输一段文本到电脑上时，我们的操作往往是，复制文本，打开手机微信，粘贴发送到文件传输助手，接着打开电脑微信，接收文本。而现在，我们不需要打开微信。只需要打开这个网站！</p>
   <div class="card mb-4">
     <div class="card-header">
       <p class="my-0 font-weight-normal">展示区:</p>
     </div>
     <div class="card-body">
-      <ul class="list-group list-group-flush">
-        <li v-for="(i, index) in rData" :key="index" class="list-group-item">💕：{{ i }}</li>
-      </ul>
+      <div class="list-group list-group-flush">
+        <pre v-for="(i, index) in rData" :key="index" class="list-group-item">{{ i }}</pre>
+      </div>
     </div>
   </div>
-  <button class="btn btn-outline-danger mb-4" @click="clearAll">清空</button>
+  <button class="btn btn-outline-danger mb-4" @click="clearAll">清空展示区</button>
+  <br>
+  <br>
 </template>
+
+
 
 <script>
 const AV = require("leancloud-storage");
