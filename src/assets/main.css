@@ -1,11 +1,4 @@
-pre.list-group-item::before {
-  content: "💕";
-  position: absolute;
-  left: 0px;
-}
-pre.list-group-item{
-  padding-left: 30px;
-}
+
 
 /* 底部信息 */
 footer {
