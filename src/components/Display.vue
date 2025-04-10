@@ -1,22 +1,23 @@
 <template>
-  <p class="mt-4 ">👍前言：我们常常遇到这样的情况：想要将手机上的一段文本传输到电脑，通常的操作是复制文本、打开微信、粘贴并发送到文件传输助手，然后再在电脑上接收。现在，无需再打开微信，只需访问这个网站，就能轻松完成文本传输！</p>
-  <div class="card mb-4">
+  
+  <div class="card mb-4 mt-4">
     <div class="card-header">
-      <p class="my-0 font-weight-normal">展示区:</p>
+      <span class="my-0 font-weight-normal">展示区:</span>
+      <button class="btn btn-outline-danger" @click="clearAll">清空</button>
     </div>
     <div class="card-body">
       <div class="list-group list-group-flush">
         <div v-for="(i, index) in rData" :key="index" class="list-group-item">
-          <button class="btn btn-outline-primary copy-btn" @click="copyText(i.text)">复制</button>
+          <div class="item-header">
+            <p class="create-time">创建时间: {{ i.createdAt }}</p>
+            <button class="btn btn-outline-primary copy-btn" @click="copyText(i.text)">复制</button>
+          </div>
           <pre class="list-group-item" :data-index="index + 1">{{ i.text }}</pre>
-          <small class="text-muted">创建时间: {{ i.createdAt }}</small>
         </div>
       </div>
     </div>
   </div>
-  <button class="btn btn-outline-danger mb-4" @click="clearAll">清空展示区</button>
-  <br>
-  <br>
+  
 </template>
 
 
@@ -43,8 +44,14 @@ export default {
     //   console.log(rData)
     // }
     function clearAll() {
+      const password = prompt("请输入密码：");
+      if (password !== "admin") {
+        alert("密码错误，操作已取消");
+        return;
+      }
+
       if (confirm("确定要清空展示区吗？")) {
-        //   批量删除
+        // 批量删除
         const arr1 = [...idData];
         for (let i = 0; i < arr1.length; i++) {
           const todo = AV.Object.createWithoutData("messageBoard", arr1[i]);
@@ -71,12 +78,14 @@ export default {
             createdAt: new Date(element.createdAt).toLocaleString()
           });
         });
+        rData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 按时间排序
       });
       Bus.on("updataDisplay", (v) => {
         rData.push({
           text: v,
           createdAt: new Date().toLocaleString()
         });
+        rData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // 按时间排序
         const query = new AV.Query("messageBoard");
         query.find().then((v) => {
           v.forEach((element) => {
@@ -96,34 +105,65 @@ export default {
 </script>
 
 <style scoped>
-pre.list-group-item::before {
-  content: "💕"attr(data-index)":";
-  position: absolute;
-  left: 0px;
-}
-pre.list-group-item{
+pre.list-group-item {
   padding-left: 2.6rem;
+  background-color: #f1f3f5;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
 }
-.btn{
+.btn {
   float: right;
   margin-top: 10px;
 }
-.copy-btn{
+.copy-btn {
   font-size: 12px;
+  /* margin-right: 10px; */
+  margin-top: 0;
 }
-.list-group-flush .list-group-item{
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+.list-group-flush .list-group-item {
   border-top-width: 0;
-  /* border-bottom-width: 0; */
+  padding: 10px 15px;
 }
 .list-group-flush .list-group-item:first-child {
-    border-bottom-width: 0;
+  border-bottom-width: 0;
 }
 pre {
-    /* margin-bottom: 6px; */
-    font-family: 'Microsoft YaHei', sans-serif;
-    margin-bottom: 0.1rem;
+  font-family: 'Microsoft YaHei', sans-serif;
+  margin-bottom: 0.1rem;
 }
-.text-muted{
+.text-muted {
   font-size: 70%;
+  color: #000000;
+}
+.card {
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+.card-header{
+  line-height: 45px;
+}
+.card-header p {
+  
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.card-body {
+  padding: 15px;
+}
+.create-time{
+  font-size: 12px;
+  color: brown;
+  line-height: 30px;
 }
 </style>
